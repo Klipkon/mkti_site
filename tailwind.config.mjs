@@ -1,12 +1,7 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   darkMode: ["class"],
-  content: [
-    './pages/**/*.{ts,tsx}',
-    './components/**/*.{ts,tsx}',
-    './app/**/*.{ts,tsx}',
-    './src/**/*.{ts,tsx}',
-  ],
+  content: ["./src/**/*.{astro,html,js,jsx,md,mdx,svelte,ts,tsx,vue}"],
   prefix: "",
   theme: {
     container: {
@@ -17,6 +12,13 @@ module.exports = {
       },
     },
     extend: {
+      backgroundImage: {
+        "gradient-45": "linear-gradient(to bottom, var(--tw-gradient-stops))",
+      },
+      boxShadow: {
+        "blue-strong": "0 15px 25px 0 hsl(var(--subtle-secondary))",
+        blue: "0 5px 5px 0 hsl(var(--subtle-secondary-shadow))",
+      },
       colors: {
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
@@ -74,4 +76,4 @@ module.exports = {
     },
   },
   plugins: [require("tailwindcss-animate")],
-}
+};
