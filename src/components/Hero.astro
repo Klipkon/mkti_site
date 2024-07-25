@@ -1,0 +1,52 @@
+---
+import Picture from "@/components/Picture.astro";
+import { Button } from "@/components/ui/button";
+import type { IButton, IImage } from "@/types/page";
+
+export interface Props {
+  image: IImage;
+  buttons: IButton[];
+}
+
+const { image, buttons } = Astro.props;
+---
+
+<div
+  class="flex flex-col items-center justify-center w-full"
+  style="height: calc(100dvh - 80px);"
+>
+  <Picture
+    id="heroImage"
+    src={image.data.attributes.url}
+    width={image.data.attributes.width}
+    height={image.data.attributes.height}
+    alt={image.data.attributes.alternativeText}
+  />
+  <div
+    class="flex flex-col sm:flex-row gap-4 items-center justify-center w-full"
+  >
+    {
+      buttons.map((button) => (
+        <Button
+          variant={button.variant}
+          size={button.size}
+          key={button.id}
+          className="w-full sm:w-auto"
+        >
+          {button.content}
+        </Button>
+      ))
+    }
+  </div>
+</div>
+
+<script>
+  document.addEventListener("mousemove", (event) => {
+    const image = document.querySelector<HTMLImageElement>("#heroImage")!;
+
+    const x = (window.innerWidth - event.pageX * 1) / 90;
+    const y = (window.innerHeight - event.pageY * 1) / 90;
+
+    image.style.transform = `translateX(${x}px) translateY(${y}px)`;
+  });
+</script>

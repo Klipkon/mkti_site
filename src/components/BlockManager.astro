@@ -1,0 +1,19 @@
+---
+import Hero from "@/components/Hero.astro";
+import type { IComponent } from "@/types/page";
+
+interface Props {
+  components: IComponent[];
+}
+
+const { components } = Astro.props;
+---
+
+{
+  components.map((component) => {
+    switch (component.__component) {
+      case "sections.hero":
+        return <Hero image={component.image!} buttons={component.buttons!} />;
+    }
+  })
+}

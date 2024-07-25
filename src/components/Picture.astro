@@ -1,0 +1,17 @@
+---
+import type { HTMLAttributes } from "astro/types";
+import { Image } from "astro:assets";
+
+export interface Props extends HTMLAttributes<"img"> {}
+
+const { src, height, width, alt } = Astro.props;
+---
+
+<Image
+  {...Astro.props}
+  src={import.meta.env.STRAPI_URL + src}
+  alt={alt ?? ""}
+  height={Number(height)}
+  width={Number(width)}
+  loading="eager"
+/>

@@ -1,0 +1,40 @@
+---
+import BlockManager from "@/components/BlockManager.astro";
+import Layout from "@/layouts/Layout.astro";
+import fetchApi from "@/lib/strapi";
+import type { IPage } from "@/types/page";
+import QueryString from "qs";
+
+export async function getStaticPaths() {
+  const pages = await fetchApi<IPage[]>({
+    endpoint: "pages",
+    wrappedByKey: "data",
+    query: QueryString.stringify({
+      populate: {
+        seo: true,
+        components: {
+          populate: {
+            image: true,
+            buttons: true,
+          },
+        },
+      },
+    }),
+  });
+
+  console.log(JSON.stringify(pages, null, 2));
+
+  return pages.map((page) => {
+    return {
+      params: { slug: page.attributes.slug ?? undefined },
+      props: page,
+    };
+  });
+}
+
+const page = Astro.props;
+---
+
+<Layout seo={page.attributes.seo}>
+  <BlockManager components={page.attributes.components} />
+</Layout>
