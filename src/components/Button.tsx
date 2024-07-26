@@ -17,7 +17,9 @@ export default function Button({
 }: Props) {
   return href ? (
     <UIButton asChild variant={variant} size={size}>
-      <a href={href}>{children}</a>
+      <a href={href} {...props}>
+        {children}
+      </a>
     </UIButton>
   ) : (
     <UIButton variant={variant} size={size}>
