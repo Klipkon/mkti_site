@@ -1,0 +1,63 @@
+---
+import fetchApi from "@/lib/strapi";
+import type { IFooter } from "@/types/footer";
+import { Linkedin } from "lucide-react";
+import QueryString from "qs";
+import Button from "./Button";
+import Picture from "./Picture.astro";
+import { Separator } from "./ui/separator";
+
+const data = await fetchApi<IFooter>({
+  endpoint: "footer",
+  wrappedByKey: "data",
+  query: QueryString.stringify({
+    populate: {
+      logo: true,
+      navigation: true,
+      social_media: true,
+    },
+  }),
+});
+
+const { caption, logo, navigation, social_media } = data.attributes;
+---
+
+<footer class="flex flex-col items-center gap-6 py-12">
+  <Separator />
+  <div
+    class="flex flex-col md:flex-row w-full items-center gap-12 md:justify-between md:h-10"
+  >
+    <a href="/" class="w-auto h-10" aria-label="Back to home page">
+      <Picture
+        src={logo.data.attributes.url}
+        width={logo.data.attributes.width}
+        height={logo.data.attributes.width}
+        class="h-full w-auto"
+      />
+    </a>
+    <nav class="flex flex-col md:flex-row items-center justify-center gap-6">
+      {
+        navigation.map((link) => (
+          <Button variant="ghost" size="sm" href={link.href}>
+            {link.content}
+          </Button>
+        ))
+      }
+    </nav>
+    <div class="flex flex-col md:flex-row items-center justify-center gap-2">
+      {
+        social_media.map((btn) => (
+          <Button
+            variant="secondary"
+            size="icon"
+            href={btn.href}
+            aria-label={btn.icon.toString() + "link"}
+          >
+            <Linkedin />
+          </Button>
+        ))
+      }
+    </div>
+  </div>
+  <p class="pt-12">{caption}</p>
+</footer>
