@@ -1,4 +1,5 @@
 ---
+import Header from "@/components/Header.astro";
 import "@/styles/globals.css";
 import type { ISeo } from "@/types/page";
 
@@ -23,6 +24,7 @@ const { metaTitle, metaDescription } = seo;
   </head>
   <body class="flex items-start justify-center w-full">
     <div class="container">
+      <Header />
       <slot />
     </div>
   </body>

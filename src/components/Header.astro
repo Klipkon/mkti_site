@@ -1,0 +1,44 @@
+---
+import Button from "@/components/Button";
+import MobileMenu from "@/components/MobileMenu";
+import fetchApi from "@/lib/strapi";
+import type { IHeader } from "@/types/header";
+import QueryString from "qs";
+import Picture from "./Picture.astro";
+
+const data = await fetchApi<IHeader>({
+  endpoint: "header",
+  wrappedByKey: "data",
+  query: QueryString.stringify({
+    populate: {
+      logo: true,
+      navigation: true,
+    },
+  }),
+});
+
+const { logo, navigation } = data.attributes;
+---
+
+<header
+  class="flex w-full items-center justify-between h-20 sticky top-0 py-5 rounded-3xl bg-white z-50"
+>
+  <a href="/" class="w-auto h-full">
+    <Picture
+      src={logo.data.attributes.url}
+      width={logo.data.attributes.width}
+      height={logo.data.attributes.width}
+      class="h-full w-auto"
+    />
+  </a>
+  <MobileMenu navigation={navigation} client:load />
+  <nav class="hidden md:flex items-center justify-center gap-2">
+    {
+      navigation.map((link) => (
+        <Button variant="ghost" size="sm" href={link.href}>
+          {link.content}
+        </Button>
+      ))
+    }
+  </nav>
+</header>
