@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { Sheet, SheetFooter } from "@/components/ui/sheet";
+import { Sheet, SheetClose, SheetFooter } from "@/components/ui/sheet";
 import type { ILink } from "@/types/header";
 import { Menu } from "lucide-react";
 import {
@@ -44,7 +44,9 @@ export default function MobileMenu({ navigation }: Props) {
           </nav>
 
           <SheetFooter>
-            <Button variant="secondary">Zamknij</Button>
+            <SheetClose>
+              <Button variant="secondary">Zamknij</Button>
+            </SheetClose>
           </SheetFooter>
         </SheetContent>
       </Sheet>
