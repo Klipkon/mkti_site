@@ -21,6 +21,8 @@ export interface IComponent {
   description?: string;
   highlightedWords?: string;
   chips?: IChip[];
+  button?: IButton;
+  titleWithDescription?: ITitleWithDescription;
 }
 
 export interface ISeo {
@@ -71,4 +73,10 @@ export interface IChip {
   id: number;
   content: string;
   icon: string;
+}
+
+export interface ITitleWithDescription {
+  id: number;
+  title: string;
+  description: string;
 }
