@@ -1,0 +1,23 @@
+---
+import { BookMarked, DollarSign, MoveUpRight } from "lucide-react";
+
+interface Props {
+  icon: string;
+  content: string;
+}
+
+const { icon, content } = Astro.props;
+
+const icons = ["DollarSign", "BookMarked", "MoveUpRight"];
+
+function chooseIcon(icon: string) {}
+---
+
+<div
+  class="flex items-center justify-center gap-2 from-secondary to-primary gradient bg-gradient-45 p-6 rounded-3xl text-white"
+>
+  {icon == icons[0] ? <DollarSign /> : null}
+  {icon == icons[1] ? <BookMarked /> : null}
+  {icon == icons[2] ? <MoveUpRight /> : null}
+  <p>{content}</p>
+</div>
