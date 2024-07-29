@@ -1,0 +1,96 @@
+---
+import { Checkbox } from "@/components/ui/checkbox";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Textarea } from "@/components/ui/textarea";
+import fetchApi from "@/lib/strapi";
+import type { IContactData } from "@/types/contactForm";
+import { Clock, Home, Mail, Phone } from "lucide-react";
+import QueryString from "qs";
+import Button from "./Button";
+import TitleWithDescription from "./TitleWithDescription.astro";
+
+interface Props {
+  title: string;
+}
+
+const { title } = Astro.props;
+
+const contactInfo = await fetchApi<IContactData>({
+  endpoint: "contact-info",
+  wrappedByKey: "data",
+  query: QueryString.stringify({
+    populate: "*",
+  }),
+});
+
+const { address, companyName, form, openHours, phone, email } =
+  contactInfo.attributes;
+
+const {
+  checkboxLabel,
+  emailLabel,
+  emailPlaceholder,
+  messageLabel,
+  messagePlaceholder,
+} = form;
+---
+
+<div class="flex flex-col items-start justify-center gap-6 py-24">
+  <TitleWithDescription title={title} />
+  <div
+    class="flex flex-col items-start lg:flex-row lg:items-center justify-between w-full gap-8"
+  >
+    <div class="flex flex-col items-start justify-center gap-12 pr-12">
+      <p class="uppercase text-lg md:text-2xl">{companyName}</p>
+      <div class="flex flex-col items-start justify-start gap-4">
+        <h3 class="text-2xl font-bold">Dane kontaktowe</h3>
+        <div class="flex items-center justify-start gap-4">
+          <Button variant="secondary" size="icon" href={"mailto:" + email}>
+            <Mail />
+          </Button>
+          <p>{email}</p>
+        </div>
+        <div class="flex items-center justify-start gap-4">
+          <Button variant="secondary" size="icon">
+            <Home />
+          </Button>
+          <p>{address}</p>
+        </div>
+        <div class="flex items-center justify-start gap-4">
+          <Button variant="secondary" size="icon" href={"tel:" + phone}>
+            <Phone />
+          </Button>
+          <p>{phone}</p>
+        </div>
+        <div class="flex items-center justify-start gap-4">
+          <Button variant="secondary" size="icon">
+            <Clock />
+          </Button>
+          <p>{openHours}</p>
+        </div>
+      </div>
+    </div>
+    <div
+      class="flex p-8 border-1 border-subtle-secondary shadow-blue max-w-[600px] rounded-3xl"
+    >
+      <form class="w-full flex flex-col items-start justify-center gap-8">
+        <div class="grid w-full items-center gap-1.5">
+          <Label htmlFor="email">{emailLabel}</Label>
+          <Input type="email" id="email" placeholder={emailPlaceholder} />
+        </div>
+        <div class="grid w-full items-center gap-1.5">
+          <Label htmlFor="message">{messageLabel}</Label>
+          <Textarea id="message" placeholder={messagePlaceholder} />
+        </div>
+        <div class="flex justify-start w-full items-center gap-4">
+          <Checkbox id="marketingInfo" />
+          <Label htmlFor="marketingInfo">{checkboxLabel}</Label>
+        </div>
+        <Button variant="default" size="default" className="w-full sm:w-auto"
+          >Wyślij</Button
+        >
+      </form>
+    </div>
+  </div>
+</div>

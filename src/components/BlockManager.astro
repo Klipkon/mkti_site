@@ -3,6 +3,7 @@ import Hero from "@/components/Hero.astro";
 import type { IComponent } from "@/types/page";
 import AboutUs from "./AboutUs.astro";
 import Blog from "./Blog.astro";
+import Contact from "./Contact.astro";
 import WithImage from "./WithImage.astro";
 
 interface Props {
@@ -37,6 +38,9 @@ const { components } = Astro.props;
       }
       case "sections.blog": {
         return <Blog title={component.title!} />;
+      }
+      case "sections.contact": {
+        return <Contact title={component.title!} />;
       }
     }
   })
