@@ -1,0 +1,47 @@
+---
+import type { IChip } from "@/types/page";
+import Chip from "./Chip.astro";
+import Title from "./Title.astro";
+
+interface Props {
+  title: string;
+  description: string;
+  highlightedWords: string;
+  chips: IChip[];
+}
+
+const { chips, description, highlightedWords, title } = Astro.props;
+
+function highlightText(normalText: string, highlightText: string) {
+  const phrases = highlightText.split(" ");
+
+  const escapedPhrases = phrases.map((phrase) =>
+    phrase.replace(/[-[\]{}()*+?.,\\^$|#]/g, "\\$&")
+  );
+
+  const regex = new RegExp(escapedPhrases.join("|"), "gi");
+
+  const highlightedText = normalText.replace(
+    regex,
+    (match) => `<span class="text-primary">${match}</span>`
+  );
+
+  return highlightedText;
+}
+
+const header = highlightText(title, highlightedWords);
+---
+
+<div class="w-full flex items-center justify-center">
+  <div
+    class="flex flex-col items-center justify-center py-40 text-center gap-8 max-w-4xl"
+  >
+    <Title set:html={header} />
+    <p class="text-center">{description}</p>
+    <div
+      class="flex flex-col items-center justify-center gap-4 md:flex-row p-12"
+    >
+      {chips.map((chip) => <Chip content={chip.content} icon={chip.icon} />)}
+    </div>
+  </div>
+</div>

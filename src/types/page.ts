@@ -16,7 +16,11 @@ export interface IComponent {
   id: number;
   __component: string;
   image?: IImage;
-  buttons: IButton[];
+  buttons?: IButton[];
+  title?: string;
+  description?: string;
+  highlightedWords?: string;
+  chips?: IChip[];
 }
 
 export interface ISeo {
@@ -61,4 +65,10 @@ export interface IImage {
       updatedAt: string;
     };
   };
+}
+
+export interface IChip {
+  id: number;
+  content: string;
+  icon: string;
 }

@@ -1,6 +1,7 @@
 ---
 import Hero from "@/components/Hero.astro";
 import type { IComponent } from "@/types/page";
+import AboutUs from "./AboutUs.astro";
 
 interface Props {
   components: IComponent[];
@@ -14,6 +15,15 @@ const { components } = Astro.props;
     switch (component.__component) {
       case "sections.hero":
         return <Hero image={component.image!} buttons={component.buttons!} />;
+      case "sections.about-us":
+        return (
+          <AboutUs
+            title={component.title!}
+            description={component.description!}
+            chips={component.chips!}
+            highlightedWords={component.highlightedWords!}
+          />
+        );
     }
   })
 }
