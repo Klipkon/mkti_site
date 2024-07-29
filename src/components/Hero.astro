@@ -1,7 +1,7 @@
 ---
 import Picture from "@/components/Picture.astro";
-import { Button } from "@/components/ui/button";
 import type { IButton, IImage } from "@/types/page";
+import Button from "./Button";
 
 export interface Props {
   image: IImage;
@@ -28,9 +28,9 @@ const { image, buttons } = Astro.props;
     {
       buttons.map((button) => (
         <Button
+          href={button.href}
           variant={button.variant}
           size={button.size}
-          key={button.id}
           className="w-full sm:w-auto"
         >
           {button.content}
