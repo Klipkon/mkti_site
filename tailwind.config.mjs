@@ -17,7 +17,7 @@ module.exports = {
       },
       boxShadow: {
         "blue-strong": "0 15px 25px 0 hsl(var(--subtle-secondary))",
-        blue: "0 5px 5px 0 hsl(var(--subtle-secondary-shadow))",
+        blue: "0 5px 15px 0 hsl(var(--subtle-secondary-shadow))",
       },
       colors: {
         border: "hsl(var(--border))",
@@ -61,6 +61,9 @@ module.exports = {
         lg: "var(--radius)",
         md: "calc(var(--radius) - 2px)",
         sm: "calc(var(--radius) - 4px)",
+      },
+      borderWidth: {
+        1: "1px",
       },
       keyframes: {
         "accordion-down": {

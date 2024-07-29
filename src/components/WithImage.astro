@@ -1,0 +1,37 @@
+---
+import type { IButton, IImage, ITitleWithDescription } from "@/types/page";
+import { ArrowRight } from "lucide-react";
+import Button from "./Button";
+import Picture from "./Picture.astro";
+import TitleWithDescription from "./TitleWithDescription.astro";
+
+interface Props {
+  image: IImage;
+  titleWithDescription: ITitleWithDescription;
+  button: IButton;
+}
+
+const { image, titleWithDescription, button } = Astro.props;
+const { title, description } = titleWithDescription;
+---
+
+<div class="flex flex-col lg:flex-row items-center justify-between py-24">
+  <div
+    class="flex flex-col items-start flex-1 justify-center gap-12 py-16 pr-12"
+  >
+    <TitleWithDescription title={title} description={description} />
+    <Button
+      variant={button.variant}
+      size={button.size}
+      href={button.href}
+      className="flex gap-2"
+      >{button.content} <ArrowRight />
+    </Button>
+  </div>
+  <Picture
+    class="border-subtle-secondary border-1 flex-1 rounded-3xl object-contain shadow-blue max-h-[450px]"
+    src={image.data.attributes.url}
+    width={image.data.attributes.width}
+    height={image.data.attributes.height}
+  />
+</div>

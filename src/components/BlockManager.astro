@@ -2,6 +2,7 @@
 import Hero from "@/components/Hero.astro";
 import type { IComponent } from "@/types/page";
 import AboutUs from "./AboutUs.astro";
+import WithImage from "./WithImage.astro";
 
 interface Props {
   components: IComponent[];
@@ -24,6 +25,15 @@ const { components } = Astro.props;
             highlightedWords={component.highlightedWords!}
           />
         );
+      case "sections.with-image": {
+        return (
+          <WithImage
+            titleWithDescription={component.titleWithDescription!}
+            button={component.button!}
+            image={component.image!}
+          />
+        );
+      }
     }
   })
 }
