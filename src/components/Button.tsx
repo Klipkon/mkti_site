@@ -13,16 +13,17 @@ export default function Button({
   variant,
   size,
   children,
+  className,
   ...props
 }: Props) {
   return href ? (
-    <UIButton asChild variant={variant} size={size}>
+    <UIButton asChild variant={variant} size={size} className={className}>
       <a href={href} {...props}>
         {children}
       </a>
     </UIButton>
   ) : (
-    <UIButton variant={variant} size={size}>
+    <UIButton variant={variant} size={size} className={className}>
       {children}
     </UIButton>
   );
