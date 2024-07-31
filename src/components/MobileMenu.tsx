@@ -17,7 +17,7 @@ export default function MobileMenu({ navigation }: Props) {
   return (
     <div>
       <Sheet>
-        <SheetTrigger>
+        <SheetTrigger asChild>
           <Button className="md:hidden" size="icon" variant="secondary">
             <Menu />
           </Button>
@@ -44,7 +44,7 @@ export default function MobileMenu({ navigation }: Props) {
           </nav>
 
           <SheetFooter>
-            <SheetClose>
+            <SheetClose asChild>
               <Button variant="secondary">Zamknij</Button>
             </SheetClose>
           </SheetFooter>
