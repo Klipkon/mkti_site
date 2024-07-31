@@ -1,0 +1,50 @@
+---
+import Picture from "@/components/Picture.astro";
+import TitleWithDescription from "@/components/TitleWithDescription.astro";
+import type { ISeo, ITitleWithDescription } from "@/types/page";
+import type { IProductCategory } from "@/types/product";
+import Layout from "./Layout.astro";
+
+interface Props {
+  data: IProductCategory[];
+  seo: ISeo;
+  header: ITitleWithDescription;
+}
+
+const { data, seo, header } = Astro.props;
+
+const url = Astro.url;
+---
+
+<Layout seo={seo} slug={url.pathname}>
+  <div class="flex flex-col items-start justify-start w-full gap-16 py-16">
+    <div class="max-w-3xl">
+      <TitleWithDescription
+        title={header.title}
+        description={header.description ?? ""}
+      />
+    </div>
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+      {
+        data.map((elem) => (
+          <a href={"/produkty/" + elem.attributes.slug!} class="h-full">
+            <div class="rounded-3xl border-1 border-subtle-secondary shadow-blue p-4 flex flex-col items-start justify-start gap-4 h-full group/productCard hover:-translate-y-3 transition-transform">
+              <Picture
+                class="rounded-3xl h-full w-full object-cover"
+                src={elem.attributes.image!.data.attributes.url}
+                width={elem.attributes.image!.data.attributes.width}
+                height={elem.attributes.image!.data.attributes.height}
+              />
+              <h3
+                class="text-2xl font-semibold group-hover/productCard:text-primary"
+                transition:name="ProductTitle"
+              >
+                {elem.attributes.name}
+              </h3>
+            </div>
+          </a>
+        ))
+      }
+    </div>
+  </div>
+</Layout>

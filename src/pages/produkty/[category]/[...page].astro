@@ -1,0 +1,81 @@
+---
+import Products from "@/layouts/Products.astro";
+import fetchApi from "@/lib/strapi";
+import type { IProduct, IProductCategory } from "@/types/product";
+import type { GetStaticPathsOptions } from "astro";
+import QueryString from "qs";
+
+export async function getStaticPaths({ paginate }: GetStaticPathsOptions) {
+  const categories = await fetchApi<IProductCategory[]>({
+    endpoint: "product-categories",
+    wrappedByKey: "data",
+    query: QueryString.stringify({
+      populate: {
+        seo: true,
+      },
+    }),
+  });
+
+  const products = await fetchApi<IProduct[]>({
+    endpoint: "products",
+    wrappedByKey: "data",
+    query: QueryString.stringify({
+      populate: "*",
+    }),
+  });
+
+  return categories.flatMap((category) => {
+    const categoryName = category.attributes.name;
+    const categoryNameSlug = category.attributes.slug!;
+
+    const filteredProducts: IProductCategory[] = [];
+
+    products.map((product) => {
+      product.attributes.product_categories.data.map((productCategory) => {
+        if (productCategory.attributes.name == categoryName) {
+          filteredProducts.push({
+            id: product.id,
+            attributes: {
+              name: product.attributes.titleWithDescription!.title,
+              image: product.attributes.thumbnail,
+              createdAt: product.attributes.createdAt,
+              publishedAt: product.attributes.publishedAt,
+              updatedAt: product.attributes.updatedAt,
+              slug: product.attributes.slug,
+            },
+          });
+        }
+      });
+    });
+
+    return paginate(filteredProducts, {
+      params: { category: categoryNameSlug },
+      pageSize: 9,
+    });
+  });
+}
+
+const { page } = Astro.props;
+const { category } = Astro.params;
+
+const productCategory = await fetchApi<IProductCategory[]>({
+  endpoint: "product-categories",
+  wrappedByKey: "data",
+  query: QueryString.stringify({
+    populate: {
+      seo: true,
+    },
+    filters: {
+      slug: {
+        $eq: category,
+      },
+    },
+  }),
+});
+---
+
+<Products
+  data={page.data}
+  seo={productCategory[0].attributes.seo!}
+  header={{ id: 1, title: productCategory[0].attributes.name, description: "" }}
+/>

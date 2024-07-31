@@ -1,0 +1,50 @@
+---
+import Products from "@/layouts/Products.astro";
+import fetchApi from "@/lib/strapi";
+import type { IPage, ITitleWithDescription } from "@/types/page";
+import type { IProductCategory } from "@/types/product";
+import QueryString from "qs";
+
+const pageData = await fetchApi<IPage[]>({
+  endpoint: "pages",
+  wrappedByKey: "data",
+  query: QueryString.stringify({
+    populate: {
+      seo: true,
+      components: {
+        populate: {
+          titleWithDescription: true,
+        },
+      },
+    },
+    filters: {
+      slug: {
+        $eq: "/produkty",
+      },
+    },
+  }),
+});
+
+const categoriesData = await fetchApi<IProductCategory[]>({
+  endpoint: "product-categories",
+  wrappedByKey: "data",
+  query: QueryString.stringify({
+    populate: {
+      seo: true,
+      image: true,
+    },
+  }),
+});
+
+const { seo, components } = pageData[0].attributes;
+
+const titleWithDescription = components.find(
+  (e) => e.__component == "components.title-with-description"
+) as ITitleWithDescription;
+---
+
+<Products
+  data={categoriesData}
+  seo={seo}
+  header={titleWithDescription ?? { title: "Produkty" }}
+/>

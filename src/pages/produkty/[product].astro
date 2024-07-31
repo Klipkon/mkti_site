@@ -1,0 +1,58 @@
+---
+import Button from "@/components/Button";
+import Carousel from "@/components/Carousel";
+import TitleWithDescription from "@/components/TitleWithDescription.astro";
+import Layout from "@/layouts/Layout.astro";
+import fetchApi from "@/lib/strapi";
+import "@/styles/globals.css";
+import type { IProduct } from "@/types/product";
+import DOMPurify from "isomorphic-dompurify";
+import { ArrowRight } from "lucide-react";
+
+export async function getStaticPaths() {
+  const products = await fetchApi<IProduct[]>({
+    endpoint: "products",
+    wrappedByKey: "data",
+    query: "populate=*",
+  });
+
+  return products.map((product) => {
+    return {
+      params: {
+        product: product.attributes.slug,
+      },
+      props: product,
+    };
+  });
+}
+
+const product = Astro.props;
+const { images, thumbnail, button, seo, slug, content } = product.attributes;
+---
+
+<Layout seo={seo!} slug={slug}>
+  <div
+    class="flex flex-col xl:flex-row gap-8 tems-center xl:items-start py-8 lg:py-16"
+  >
+    <!-- <Picture
+      class="rounded-3xl border-1 border-subtle-secondary shadow-blue w-full h-full"
+      src={thumbnail.data.attributes.url}
+      width={thumbnail.data.attributes.width}
+      height={thumbnail.data.attributes.height}
+    /> -->
+    <Carousel images={images.data} client:load />
+    <div class="flex flex-col items-start justify-center gap-8 xl:max-w-md">
+      <TitleWithDescription
+        title={product.attributes.titleWithDescription!.title}
+        description={product.attributes.titleWithDescription?.description}
+      />
+      <Button variant={button!.variant} size={button!.size} href={button!.href}
+        ><div class="flex gap-2 items-center justify-center">
+          {button?.content}
+          <ArrowRight />
+        </div>
+      </Button>
+    </div>
+  </div>
+  <div set:html={DOMPurify.sanitize(content)} class="w-full overflow-auto" />
+</Layout>

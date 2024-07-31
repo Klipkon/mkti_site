@@ -3,12 +3,14 @@ import Footer from "@/components/Footer.astro";
 import Header from "@/components/Header.astro";
 import "@/styles/globals.css";
 import type { ISeo } from "@/types/page";
+import ViewTransitions from "astro/components/ViewTransitions.astro";
 
 interface Props {
   seo: ISeo;
+  slug: string;
 }
 
-const { seo } = Astro.props;
+const { seo, slug } = Astro.props;
 const { metaTitle, metaDescription } = seo;
 ---
 
@@ -22,10 +24,11 @@ const { metaTitle, metaDescription } = seo;
     <meta name="generator" content={Astro.generator} />
     <title>{metaTitle}</title>
     <meta name="description" content={metaDescription} />
+    <ViewTransitions />
   </head>
   <body class="flex items-start justify-center w-full">
-    <div class="container">
-      <Header />
+    <div class="container" transition:animate="fade">
+      <Header slug={slug} />
       <slot />
       <Footer />
     </div>
