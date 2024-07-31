@@ -18,6 +18,12 @@ const data = await fetchApi<IHeader>({
 });
 
 const { logo, navigation } = data.attributes;
+
+interface Props {
+  slug: string;
+}
+
+const { slug } = Astro.props;
 ---
 
 <header
@@ -35,7 +41,11 @@ const { logo, navigation } = data.attributes;
   <nav class="hidden md:flex items-center justify-center gap-2">
     {
       navigation.map((link) => (
-        <Button variant="ghost" size="sm" href={link.href}>
+        <Button
+          variant={slug == link.href ? "default" : "ghost"}
+          size="sm"
+          href={link.href}
+        >
           {link.content}
         </Button>
       ))
