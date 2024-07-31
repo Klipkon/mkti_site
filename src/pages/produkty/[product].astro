@@ -1,6 +1,6 @@
 ---
 import Button from "@/components/Button";
-import Carousel from "@/components/Carousel";
+import Gallery from "@/components/Gallery";
 import TitleWithDescription from "@/components/TitleWithDescription.astro";
 import Layout from "@/layouts/Layout.astro";
 import fetchApi from "@/lib/strapi";
@@ -32,7 +32,7 @@ const { images, thumbnail, button, seo, slug, content } = product.attributes;
 
 <Layout seo={seo!} slug={slug}>
   <div
-    class="flex flex-col xl:flex-row gap-8 tems-center xl:items-start py-8 lg:py-16"
+    class="flex flex-col xl:flex-row gap-8 items-center xl:items-start xl:justify-between py-8 lg:py-16"
   >
     <!-- <Picture
       class="rounded-3xl border-1 border-subtle-secondary shadow-blue w-full h-full"
@@ -40,7 +40,7 @@ const { images, thumbnail, button, seo, slug, content } = product.attributes;
       width={thumbnail.data.attributes.width}
       height={thumbnail.data.attributes.height}
     /> -->
-    <Carousel images={images.data} client:load />
+    <Gallery images={images.data} client:load />
     <div class="flex flex-col items-start justify-center gap-8 xl:max-w-md">
       <TitleWithDescription
         title={product.attributes.titleWithDescription!.title}
