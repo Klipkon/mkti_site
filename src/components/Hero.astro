@@ -39,14 +39,3 @@ const { image, buttons } = Astro.props;
     }
   </div>
 </div>
-
-<script>
-  document.addEventListener("mousemove", (event) => {
-    const image = document.querySelector<HTMLImageElement>("#heroImage")!;
-
-    const x = (window.innerWidth - event.pageX * 1) / 90;
-    const y = (window.innerHeight - event.pageY * 1) / 90;
-
-    image.style.transform = `translateX(${x}px) translateY(${y}px)`;
-  });
-</script>
