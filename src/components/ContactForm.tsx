@@ -185,10 +185,20 @@ export function ContactForm({ form }: Props) {
           <Separator className="my-2" />
           <p className="text-center text-xs">
             This site is protected by reCAPTCHA and the Google
-            <a href="https://policies.google.com/privacy">Privacy Policy</a>
-            and
-            <a href="https://policies.google.com/terms">Terms of Service</a>
-            apply.
+            <a
+              href="https://policies.google.com/privacy"
+              className="text-primary"
+            >
+              &nbsp;Privacy Policy
+            </a>
+            &nbsp;and&nbsp;
+            <a
+              href="https://policies.google.com/terms"
+              className="text-primary"
+            >
+              Terms of Service
+            </a>
+            &nbsp;apply
           </p>
         </Form>
       )}
