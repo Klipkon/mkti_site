@@ -23,6 +23,7 @@ export interface IComponent {
   chips?: IChip[];
   button?: IButton;
   titleWithDescription?: ITitleWithDescription;
+  cards?: IAboutCard[];
 }
 
 export interface ISeo {
@@ -79,6 +80,12 @@ export interface IChip {
 
 export interface ITitleWithDescription {
   id: number;
+  title: string;
+  description: string;
+}
+
+export interface IAboutCard {
+  icon: "dollar-sign" | "book-marked" | "shield-check";
   title: string;
   description: string;
 }

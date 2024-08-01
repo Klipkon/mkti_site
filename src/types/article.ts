@@ -9,10 +9,17 @@ export interface IArticle {
     publishedAt: string;
     title: string;
     seo: ISeo;
-    categories: ICategory[];
+    categories: {
+      data: ICategory[];
+    };
+    slug: string;
   };
 }
 
 export interface ICategory {
-  name: string;
+  id: number;
+  attributes: {
+    slug: string;
+    name: string;
+  };
 }

@@ -1,0 +1,70 @@
+---
+import Button from "@/components/Button";
+import Prose from "@/components/Prose.astro";
+import TitleWithDescription from "@/components/TitleWithDescription.astro";
+import Layout from "@/layouts/Layout.astro";
+import fetchApi from "@/lib/strapi";
+import "@/styles/globals.css";
+import type { IArticle } from "@/types/article";
+import DOMPurify from "isomorphic-dompurify";
+import { Calendar } from "lucide-react";
+import { marked } from "marked";
+
+export async function getStaticPaths() {
+  const articles = await fetchApi<IArticle[]>({
+    endpoint: "articles",
+    wrappedByKey: "data",
+    query: "populate=*",
+  });
+
+  return articles.map((article) => {
+    return {
+      params: {
+        article: article.attributes.slug,
+      },
+      props: article,
+    };
+  });
+}
+
+const article = Astro.props;
+
+const content = await marked.parse(article.attributes.content);
+---
+
+<Layout seo={article.attributes.seo} slug={article.attributes.slug}>
+  <div class="flex items-start justify-center w-full">
+    <div
+      class="flex flex-col items-start justify-start py-24 gap-6 max-w-screen-md"
+    >
+      <TitleWithDescription title={article.attributes.title} description="" />
+      <div class="flex gap-4">
+        {
+          article.attributes.categories.data.map((category) => {
+            return (
+              <Button
+                size="sm"
+                variant="secondary"
+                href={"/blog/" + category.attributes.slug}
+              >
+                {category.attributes.name}
+              </Button>
+            );
+          })
+        }
+      </div>
+      <div class="flex items-center justify-start gap-2">
+        <Calendar />
+        <p class="font-light">
+          {new Date(article.attributes.publishedAt).toLocaleDateString("pl-PL")}
+        </p>
+      </div><div class="flex w-full justify-center">
+        <Prose
+          set:html={DOMPurify.sanitize(content, {
+            ADD_TAGS: ["iframe"],
+          })}
+        />
+      </div>
+    </div>
+  </div>
+</Layout>
