@@ -1,4 +1,4 @@
-import Button from "@/components/Button";
+import { Button } from "@/components/ui/button";
 import { Sheet, SheetClose, SheetFooter } from "@/components/ui/sheet";
 import type { ILink } from "@/types/header";
 import { Menu } from "lucide-react";
@@ -41,10 +41,10 @@ export default function MobileMenu({ navigation }: Props) {
                 key={link.id}
                 variant="ghost"
                 size="sm"
-                href={link.href}
                 className="text-2xl"
+                asChild
               >
-                {link.content}
+                <a href={link.href}>{link.content}</a>
               </Button>
             ))}
           </nav>
