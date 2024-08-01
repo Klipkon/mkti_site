@@ -1,4 +1,4 @@
-import { Button } from "@/components/ui/button";
+import Button from "@/components/Button";
 import { Sheet, SheetClose, SheetFooter } from "@/components/ui/sheet";
 import type { ILink } from "@/types/header";
 import { Menu } from "lucide-react";
@@ -45,7 +45,9 @@ export default function MobileMenu({ navigation }: Props) {
 
           <SheetFooter>
             <SheetClose asChild>
-              <Button variant="secondary">Zamknij</Button>
+              <Button variant="secondary" size="default">
+                Zamknij
+              </Button>
             </SheetClose>
           </SheetFooter>
         </SheetContent>

@@ -29,7 +29,7 @@ export default function Gallery({ images }: Props) {
         {images.map((thumbnail, i) => (
           <img
             key={thumbnail.id}
-            className={`rounded-3xl  shadow-blue object-cover h-24 w-24 ${
+            className={`rounded-3xl  shadow-blue object-cover h-24 w-24 hover:cursor-pointer ${
               idx == i
                 ? "border-4 border-primary"
                 : "border-1 border-subtle-secondary"
