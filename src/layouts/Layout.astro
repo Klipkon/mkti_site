@@ -1,6 +1,7 @@
 ---
 import Footer from "@/components/Footer.astro";
 import Header from "@/components/Header.astro";
+import { Toaster } from "@/components/ui/toaster";
 import "@/styles/globals.css";
 import type { ISeo } from "@/types/page";
 
@@ -30,5 +31,6 @@ const { metaTitle, metaDescription } = seo;
       <slot />
       <Footer />
     </div>
+    <Toaster client:load />
   </body>
 </html>

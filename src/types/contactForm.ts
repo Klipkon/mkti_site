@@ -10,7 +10,7 @@ export interface IContactData {
     publishedAt: string;
     openHours: string;
     form: {
-      id: 1;
+      id: number;
       emailPlaceholder: string;
       messagePlaceholder: string;
       checkboxLabel: string;
