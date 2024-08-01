@@ -2,6 +2,7 @@ import Button from "@/components/Button";
 import { Sheet, SheetClose, SheetFooter } from "@/components/ui/sheet";
 import type { ILink } from "@/types/header";
 import { Menu } from "lucide-react";
+import { useEffect } from "react";
 import {
   SheetContent,
   SheetHeader,
@@ -14,6 +15,11 @@ export interface Props {
 }
 
 export default function MobileMenu({ navigation }: Props) {
+  useEffect(() => {
+    const skeleton = document.querySelector("#menuSkeleton");
+    if (skeleton) skeleton.remove();
+  }, []);
+
   return (
     <div>
       <Sheet>
