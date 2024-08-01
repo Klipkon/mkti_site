@@ -70,6 +70,7 @@ const url = Astro.url;
           return (
             <Button
               size="sm"
+              href={"/blog/" + category.attributes.slug}
               variant={
                 category.attributes.slug == categoryUrl()
                   ? "default"
