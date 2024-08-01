@@ -30,7 +30,7 @@ const { metaTitle, metaDescription } = seo;
       <Header slug={slug} />
       <slot />
       <Footer />
+      <Toaster client:load />
     </div>
-    <Toaster client:load />
   </body>
 </html>
