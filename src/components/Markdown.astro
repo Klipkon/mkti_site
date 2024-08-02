@@ -1,0 +1,15 @@
+---
+import DOMPurify from "isomorphic-dompurify";
+import { marked } from "marked";
+import Prose from "./Prose.astro";
+
+interface Props {
+  content: string;
+}
+
+const { content } = Astro.props;
+
+const parsedMarkown = await marked.parse(content);
+---
+
+<Prose set:html={DOMPurify.sanitize(parsedMarkown)} />

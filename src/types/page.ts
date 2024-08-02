@@ -24,6 +24,7 @@ export interface IComponent {
   button?: IButton;
   titleWithDescription?: ITitleWithDescription;
   cards?: IAboutCard[];
+  content?: string;
 }
 
 export interface ISeo {
