@@ -4,6 +4,7 @@ import type { IFooter } from "@/types/footer";
 import { Linkedin } from "lucide-react";
 import QueryString from "qs";
 import Button from "./Button";
+import CookieConsent from "./CookieConsent.astro";
 import Picture from "./Picture.astro";
 import { Separator } from "./ui/separator";
 
@@ -25,7 +26,7 @@ const { caption, logo, navigation, social_media } = data.attributes;
 <footer class="flex flex-col items-center gap-6 py-12">
   <Separator />
   <div
-    class="flex flex-col md:flex-row w-full items-center gap-12 md:justify-between md:h-10"
+    class="flex flex-col md:flex-row w-full items-center md:items-start gap-12 md:justify-between md:h-10"
   >
     <a href="/" class="w-auto h-10" aria-label="Back to home page">
       <Picture
@@ -35,7 +36,9 @@ const { caption, logo, navigation, social_media } = data.attributes;
         class="h-full w-auto"
       />
     </a>
-    <nav class="flex flex-col md:flex-row items-center justify-center gap-6">
+    <nav
+      class="flex flex-col flex-wrap md:flex-row items-center justify-center gap-2"
+    >
       {
         navigation.map((link) => (
           <Button variant="ghost" size="sm" href={link.href}>
@@ -43,6 +46,7 @@ const { caption, logo, navigation, social_media } = data.attributes;
           </Button>
         ))
       }
+      <CookieConsent />
     </nav>
     <div class="flex flex-col md:flex-row items-center justify-center gap-2">
       {

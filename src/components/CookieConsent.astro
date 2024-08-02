@@ -1,0 +1,22 @@
+---
+import "vanilla-cookieconsent/dist/cookieconsent.css";
+import "@/styles/cookieConsentStyles.css";
+import { Button as UIButton } from "@/components/ui/button";
+---
+
+<UIButton
+  variant="ghost"
+  size="sm"
+  type="button"
+  data-cc="show-preferencesModal">Preferencje plików cookies</UIButton
+>
+
+<script>
+  import { config } from "@/lib/cookieConsentConfig";
+  import { run } from "vanilla-cookieconsent";
+
+  // toggle custom black theme
+  document.body.classList.add("cc--mkti");
+
+  run(config);
+</script>

@@ -1,0 +1,67 @@
+.cc--mkti {
+  --cc-bg: #fff;
+  --cc-primary-color: #5093fd;
+  --cc-secondary-color: #000 !important;
+
+  --cc-btn-primary-bg: linear-gradient(#6eb9ff, #5093fd);
+  --cc-btn-primary-color: #fff;
+  --cc-btn-primary-hover-bg: var(--cc-btn-primary-bg);
+  --cc-btn-primary-hover-color: #fff;
+  --cc-btn-primary-border-color: rgba(80, 147, 253, 0.15);
+  --cc-btn-primary-hover-border-color: rgba(80, 147, 253, 0.75);
+
+  --cc-btn-secondary-bg: #6eb9ff15;
+  --cc-btn-secondary-color: var(--cc-primary-color);
+  --cc-btn-secondary-border-color: var(--cc-btn-primary-border-color);
+  --cc-btn-secondary-hover-bg: #6eb9ff25;
+  --cc-btn-secondary-hover-color: var(--cc-btn-secondary-color);
+  --cc-btn-secondary-hover-border-color: var(--cc-btn-primary-border-color);
+
+  --cc-cookie-category-block-bg: var(--cc-btn-secondary-bg);
+  --cc-cookie-category-block-border: var(--cc-btn-primary-border-color);
+  --cc-cookie-category-block-hover-bg: var(--cc-btn-secondary-hover-bg);
+  --cc-cookie-category-block-hover-border: var(--cc-btn-primary-border-color);
+  --cc-cookie-category-expanded-block-hover-bg: var(
+    --cc-btn-secondary-hover-bg
+  );
+  --cc-cookie-category-expanded-block-bg: var(--cc-btn-secondary-bg);
+  --cc-toggle-readonly-bg: var(--cc-primary-color);
+  --cc-overlay-bg: #ffffff75 !important;
+
+  --cc-toggle-on-bg: var(--cc-primary-color);
+  --cc-toggle-off-bg: var(--cc-btn-secondary-bg);
+  --cc-toggle-on-knob-bg: var(--cc-bg);
+  --cc-toggle-off-knob-bg: var(--cc-btn-primary-color);
+  --cc-toggle-readonly-knob-bg: var(--cc-bg);
+  --cc-toggle-enabled-icon-color: var(--cc-primary-color);
+  --cc-toggle-disabled-icon-color: var(--cc-bg);
+  --cc-toggle-readonly-knob-icon-color: var(--cc-toggle-readonly-bg);
+  --cc-section-category-border: var(--cc-btn-primary-border-color);
+
+  --cc-webkit-scrollbar-bg: var(--cc-section-category-border);
+  --cc-webkit-scrollbar-hover-bg: var(--cc-btn-primary-hover-bg);
+
+  --cc-separator-border-color: var(--cc-btn-primary-border-color);
+
+  --cc-footer-bg: #fff;
+  --cc-footer-color: var(--cc-secondary-color);
+  --cc-footer-border-color: var(--cc-btn-primary-border-color);
+}
+
+#cc-main .toggle__icon-off svg {
+  stroke: var(--cc-primary-color);
+}
+
+#cc-main .pm__section--toggle .pm__section-title {
+  background: none;
+}
+
+#cc-main .pm__section--expandable .pm__section-arrow {
+  background: none;
+}
+
+#cc-main .cm,
+#cc-main .pm {
+  border: 1px solid rgba(80, 147, 253, 0.15) !important;
+  box-shadow: 0 5px 15px 0 rgba(80, 147, 253, 0.15) !important;
+}
