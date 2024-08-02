@@ -56,8 +56,7 @@ export const config: CookieConsentConfig = {
           acceptAllBtn: "Akceptuj wszystkie",
           acceptNecessaryBtn: "Odrzuć wszystkie",
           showPreferencesBtn: "Zarządzaj preferencjami",
-          footer:
-            '<a href="#link">Privacy Policy</a>\n<a href="#link">Terms and conditions</a>',
+          footer: '<a href="/polityka-prywatnosci">Polityka Prywatności</a>',
         },
         preferencesModal: {
           title: "Zarządzanie Ciasteczkami",
