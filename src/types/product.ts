@@ -37,5 +37,8 @@ export interface IProduct {
       data: IProductCategory[];
     };
     content: string;
+    files?: {
+      data: IImageData[];
+    };
   };
 }

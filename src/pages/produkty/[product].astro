@@ -1,19 +1,23 @@
 ---
 import Button from "@/components/Button";
 import Gallery from "@/components/Gallery";
+import Title from "@/components/Title.astro";
 import TitleWithDescription from "@/components/TitleWithDescription.astro";
 import Layout from "@/layouts/Layout.astro";
 import fetchApi from "@/lib/strapi";
 import "@/styles/globals.css";
 import type { IProduct } from "@/types/product";
 import DOMPurify from "isomorphic-dompurify";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, FileText } from "lucide-react";
+import QueryString from "qs";
 
 export async function getStaticPaths() {
   const products = await fetchApi<IProduct[]>({
     endpoint: "products",
     wrappedByKey: "data",
-    query: "populate=*",
+    query: QueryString.stringify({
+      populate: "*",
+    }),
   });
 
   return products.map((product) => {
@@ -27,7 +31,8 @@ export async function getStaticPaths() {
 }
 
 const product = Astro.props;
-const { images, thumbnail, button, seo, slug, content } = product.attributes;
+console.log(JSON.stringify(product.attributes, null, 2));
+const { images, button, seo, slug, content, files } = product.attributes;
 ---
 
 <Layout seo={seo!} slug={slug}>
@@ -53,4 +58,24 @@ const { images, thumbnail, button, seo, slug, content } = product.attributes;
     set:html={DOMPurify.sanitize(content)}
     class="w-full overflow-x-auto flex flex-col h-min"
   />
+
+  <div class="flex flex-col items-start justify-start gap-6 py-16">
+    <Title>Załączniki</Title>
+    <div class="flex flex-col items-start justify-start gap-4">
+      {
+        files
+          ? files!.data.map((file) => (
+              <a
+                href={import.meta.env.STRAPI_URL + file.attributes.url}
+                target="_blank"
+                class="border-1 border-subtle-secondary shadow-blue p-4 flex items-center rounded-2xl gap-2"
+              >
+                <FileText />
+                <h4 class="text-sm">{file.attributes.name}</h4>
+              </a>
+            ))
+          : "Brak plików"
+      }
+    </div>
+  </div>
 </Layout>
