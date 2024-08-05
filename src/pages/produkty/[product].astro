@@ -63,7 +63,7 @@ const { images, button, seo, slug, content, files } = product.attributes;
     <Title>Załączniki</Title>
     <div class="flex flex-col items-start justify-start gap-4">
       {
-        files
+        files!.data.length > 0
           ? files!.data.map((file) => (
               <a
                 href={import.meta.env.STRAPI_URL + file.attributes.url}
