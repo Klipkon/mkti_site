@@ -31,7 +31,6 @@ export async function getStaticPaths() {
 }
 
 const product = Astro.props;
-console.log(JSON.stringify(product.attributes, null, 2));
 const { images, button, seo, slug, content, files } = product.attributes;
 ---
 
