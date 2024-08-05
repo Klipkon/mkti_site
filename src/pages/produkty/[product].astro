@@ -48,5 +48,9 @@ const { images, thumbnail, button, seo, slug, content } = product.attributes;
       </Button>
     </div>
   </div>
-  <div set:html={DOMPurify.sanitize(content)} class="w-full overflow-auto" />
+  <div
+    id="productDesc"
+    set:html={DOMPurify.sanitize(content)}
+    class="w-full overflow-x-auto flex flex-col h-min"
+  />
 </Layout>

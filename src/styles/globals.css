@@ -74,6 +74,18 @@
   body {
     @apply bg-background text-foreground;
   }
+
+  #productDesc figure {
+    @apply w-auto h-auto !important;
+  }
+
+  #productDesc td {
+    @apply border-1 border-black p-2;
+  }
+
+  #productDesc ul {
+    @apply list-disc pl-5 !important;
+  }
 }
 
 .grecaptcha-badge {
