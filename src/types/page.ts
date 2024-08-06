@@ -16,6 +16,9 @@ export interface IComponent {
   id: number;
   __component: string;
   image?: IImage;
+  images?: {
+    data: IImageData[];
+  };
   buttons?: IButton[];
   title?: string;
   description?: string;

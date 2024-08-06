@@ -20,7 +20,13 @@ const { components } = Astro.props;
   components.map(async (component) => {
     switch (component.__component) {
       case "sections.hero":
-        return <Hero image={component.image!} buttons={component.buttons!} />;
+        return (
+          <Hero
+            images={component.images?.data!}
+            buttons={component.buttons!}
+            titleWithDescription={component.titleWithDescription!}
+          />
+        );
       case "sections.about-us":
         return (
           <AboutUs

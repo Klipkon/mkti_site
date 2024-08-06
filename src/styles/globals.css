@@ -86,6 +86,10 @@
   #productDesc ul {
     @apply list-disc pl-5 !important;
   }
+
+  .card {
+    @apply border-1 border-subtle-secondary shadow-blue rounded-3xl;
+  }
 }
 
 .grecaptcha-badge {
