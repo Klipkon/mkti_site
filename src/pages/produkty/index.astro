@@ -36,7 +36,7 @@ const categoriesData = await fetchApi<IProductCategory[]>({
   }),
 });
 
-const { seo, components } = pageData[0].attributes;
+const { seo, components, slug } = pageData[0].attributes;
 
 const titleWithDescription = components.find(
   (e) => e.__component == "components.title-with-description"
@@ -44,6 +44,7 @@ const titleWithDescription = components.find(
 ---
 
 <Products
+  slug={slug}
   data={categoriesData}
   seo={seo}
   header={titleWithDescription ?? { title: "Produkty" }}

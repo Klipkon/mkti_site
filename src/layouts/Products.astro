@@ -9,14 +9,13 @@ interface Props {
   data: IProductCategory[];
   seo: ISeo;
   header: ITitleWithDescription;
+  slug: string;
 }
 
-const { data, seo, header } = Astro.props;
-
-const url = Astro.url;
+const { data, seo, header, slug } = Astro.props;
 ---
 
-<Layout seo={seo} slug={url.pathname}>
+<Layout seo={seo} slug={slug}>
   <div class="flex flex-col items-start justify-start w-full gap-16 py-16">
     <div class="max-w-3xl">
       <TitleWithDescription
