@@ -24,7 +24,7 @@ export default function MobileMenu({ navigation }: Props) {
     <div>
       <Sheet>
         <SheetTrigger asChild>
-          <Button className="md:hidden" size="icon" variant="secondary">
+          <Button className="lg:hidden" size="icon" variant="secondary">
             <Menu />
           </Button>
         </SheetTrigger>
@@ -44,7 +44,15 @@ export default function MobileMenu({ navigation }: Props) {
                 className="text-2xl"
                 asChild
               >
-                <a href={link.href}>{link.content}</a>
+                <a href={link.href} className="flex items-center gap-2">
+                  {link.content == "Sklep" && (
+                    <span className="relative flex h-2 w-2">
+                      <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75" />
+                      <span className="relative inline-flex rounded-full h-2 w-2 bg-primary" />
+                    </span>
+                  )}
+                  {link.content}
+                </a>
               </Button>
             ))}
           </nav>

@@ -41,7 +41,7 @@ const { slug } = Astro.props;
   </a>
   <Skeleton className="h-10 w-10 md:hidden" id="menuSkeleton" />
   <MobileMenu navigation={navigation} client:only="react" />
-  <nav class="hidden md:flex items-center justify-center gap-2">
+  <nav class="hidden lg:flex items-center justify-center gap-2">
     {
       navigation.map((link) => (
         <Button
