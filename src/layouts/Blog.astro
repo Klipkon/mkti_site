@@ -55,11 +55,9 @@ categories.push({
 });
 
 const sortedCategories = categories.sort((a, b) => (a.id > b.id ? 1 : -1));
-
-const url = Astro.url;
 ---
 
-<Layout seo={blogPage[0].attributes.seo} slug={url.pathname}>
+<Layout seo={blogPage[0].attributes.seo} slug={blogPage[0].attributes.slug}>
   <div class="flex flex-col items-start justify-start w-full py-24">
     <div class="flex flex-col items-start justify-center">
       <TitleWithDescription title={title} description={""} />
