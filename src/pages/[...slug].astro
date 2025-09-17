@@ -6,52 +6,50 @@ import type { IPage } from "@/types/page";
 import QueryString from "qs";
 
 export async function getStaticPaths() {
-  const pages = await fetchApi<IPage[]>({
-    endpoint: "pages",
-    wrappedByKey: "data",
-    query: QueryString.stringify({
-      filters: {
-        $and: [
-          {
-            slug: {
-              $ne: "/produkty",
-            },
-          },
-          {
-            slug: {
-              $ne: "/blog",
-            },
-          },
-        ],
-      },
-      populate: {
-        seo: true,
-        components: {
-          populate: {
-            image: true,
-            images: true,
-            buttons: true,
-            button: true,
-            chips: true,
-            titleWithDescription: true,
-            cards: true,
-          },
-        },
-      },
-    }),
-  });
+	const pages = await fetchApi<IPage[]>({
+		endpoint: "pages",
+		wrappedByKey: "data",
+		query: QueryString.stringify(
+			{
+				filters: {
+					$and: [
+						{
+							slug: {
+								$ne: "/produkty",
+							},
+						},
+						{
+							slug: {
+								$ne: "/blog",
+							},
+						},
+					],
+				},
+				populate: {
+					seo: true,
+					components: {
+						populate: "*",
+					},
+				},
+			},
+			{
+				encodeValuesOnly: true,
+			}
+		),
+	});
 
-  return pages.map((page) => {
-    return {
-      params: { slug: page.attributes.slug ?? undefined },
-      props: page,
-    };
-  });
+	return pages.map((page) => {
+		return {
+			params: { slug: page.attributes.slug ?? undefined },
+			props: page,
+		};
+	});
 }
 
 const page = Astro.props;
 ---
 
-<Layout seo={page.attributes.seo} slug={page.attributes.slug}>
-  <BlockManager components={page.attributes.components} />
-</Layout>
+<Layout seo={page.attributes.seo} slug={page.attributes.slug}
+	><BlockManager components={page.attributes.components} /></Layout
+>
+---

@@ -8,52 +8,49 @@ import type { GetStaticPathsOptions } from "astro";
 import QueryString from "qs";
 
 export async function getStaticPaths({ paginate }: GetStaticPathsOptions) {
-  const categories = await fetchApi<ICategory[]>({
-    endpoint: "categories",
-    wrappedByKey: "data",
-  });
+	const categories = await fetchApi<ICategory[]>({
+		endpoint: "categories",
+		wrappedByKey: "data",
+	});
 
-  const articles = await fetchApi<IArticle[]>({
-    endpoint: "articles",
-    wrappedByKey: "data",
-    query: QueryString.stringify({
-      populate: {
-        categories: true,
-        image: true,
-      },
-      pagination: {
-        limit: 100,
-      },
-    }),
-  });
+	const articles = await fetchApi<IArticle[]>({
+		endpoint: "articles",
+		wrappedByKey: "data",
+		query: QueryString.stringify({
+			populate: ["categories"],
+			pagination: {
+				limit: 100,
+			},
+		}),
+	});
 
-  return categories.flatMap((category) => {
-    const categoryName = category.attributes.name;
-    const categoryNameSlug = titleToSlug(category.attributes.name);
+	return categories.flatMap((category) => {
+		const categoryName = category.attributes.name;
+		const categoryNameSlug = titleToSlug(category.attributes.name);
 
-    const filteredArticles: IArticle[] = [];
+		const filteredArticles: IArticle[] = [];
 
-    articles.forEach((article) => {
-      article.attributes.categories.data.map((articleCategory) => {
-        if (categoryName == articleCategory.attributes.name) {
-          filteredArticles.push(article);
-        }
-      });
-    });
+		articles.forEach((article) => {
+			article.attributes.categories.data.map((articleCategory) => {
+				if (categoryName == articleCategory.attributes.name) {
+					filteredArticles.push(article);
+				}
+			});
+		});
 
-    return paginate(filteredArticles, {
-      params: { category: categoryNameSlug },
-      pageSize: 9,
-    });
-  });
+		return paginate(filteredArticles, {
+			params: { category: categoryNameSlug },
+			pageSize: 9,
+		});
+	});
 }
 
 const { page } = Astro.props;
 ---
 
 <Blog
-  previousUrl={page.url.prev}
-  nextUrl={page.url.next}
-  currentPage={page.currentPage}
-  articles={page.data}
+	previousUrl={page.url.prev}
+	nextUrl={page.url.next}
+	currentPage={page.currentPage}
+	articles={page.data}
 />

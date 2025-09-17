@@ -6,46 +6,44 @@ import type { IProductCategory } from "@/types/product";
 import QueryString from "qs";
 
 const pageData = await fetchApi<IPage[]>({
-  endpoint: "pages",
-  wrappedByKey: "data",
-  query: QueryString.stringify({
-    populate: {
-      seo: true,
-      components: {
-        populate: {
-          titleWithDescription: true,
-        },
-      },
-    },
-    filters: {
-      slug: {
-        $eq: "/produkty",
-      },
-    },
-  }),
+	endpoint: "pages",
+	wrappedByKey: "data",
+	query: QueryString.stringify({
+		populate: {
+			seo: true,
+			components: {
+				populate: "*",
+			},
+		},
+		filters: {
+			slug: {
+				$eq: "/produkty",
+			},
+		},
+	}),
 });
 
 const categoriesData = await fetchApi<IProductCategory[]>({
-  endpoint: "product-categories",
-  wrappedByKey: "data",
-  query: QueryString.stringify({
-    populate: {
-      seo: true,
-      image: true,
-    },
-  }),
+	endpoint: "product-categories",
+	wrappedByKey: "data",
+	query: QueryString.stringify({
+		populate: {
+			seo: true,
+			image: true,
+		},
+	}),
 });
 
 const { seo, components, slug } = pageData[0].attributes;
 
 const titleWithDescription = components.find(
-  (e) => e.__component == "components.title-with-description"
+	(e) => e.__component == "components.title-with-description"
 ) as ITitleWithDescription;
 ---
 
 <Products
-  slug={slug}
-  data={categoriesData}
-  seo={seo}
-  header={titleWithDescription ?? { title: "Produkty" }}
+	slug={slug}
+	data={categoriesData}
+	seo={seo}
+	header={titleWithDescription ?? { title: "Produkty" }}
 />

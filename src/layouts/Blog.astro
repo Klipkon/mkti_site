@@ -10,125 +10,126 @@ import QueryString from "qs";
 import Layout from "./Layout.astro";
 
 const blogPage = await fetchApi<IPage[]>({
-  endpoint: "pages",
-  wrappedByKey: "data",
-  query: QueryString.stringify({
-    filters: {
-      slug: {
-        $eq: "/blog",
-      },
-    },
-    populate: {
-      seo: true,
-      components: {
-        populate: {
-          articles: true,
-        },
-      },
-    },
-  }),
+	endpoint: "pages",
+	wrappedByKey: "data",
+	query: QueryString.stringify(
+		{
+			filters: {
+				slug: {
+					$eq: "/blog",
+				},
+			},
+			populate: {
+				seo: true,
+				components: {
+					populate: "*",
+				},
+			},
+		},
+		{
+			encodeValuesOnly: true,
+		}
+	),
 });
 
 const categories = await fetchApi<ICategory[]>({
-  endpoint: "categories",
-  wrappedByKey: "data",
+	endpoint: "categories",
+	wrappedByKey: "data",
 });
 
 interface Props {
-  articles: IArticle[];
-  previousUrl?: string;
-  nextUrl?: string;
-  currentPage: number;
+	articles: IArticle[];
+	previousUrl?: string;
+	nextUrl?: string;
+	currentPage: number;
 }
 
 const { articles, previousUrl, nextUrl, currentPage } = Astro.props;
 const title = blogPage[0].attributes.components[0].title!;
 
 const categoryUrl = () => {
-  const params = Astro.params;
-  return "category" in params ? params.category : "";
+	const params = Astro.params;
+	return "category" in params ? params.category : "";
 };
 
 categories.push({
-  id: 0,
-  attributes: { name: "Wszystko", slug: "" },
+	id: 0,
+	attributes: { name: "Wszystko", slug: "" },
 });
 
 const sortedCategories = categories.sort((a, b) => (a.id > b.id ? 1 : -1));
 ---
 
 <Layout seo={blogPage[0].attributes.seo} slug={blogPage[0].attributes.slug}>
-  <div class="flex flex-col items-start justify-start w-full py-24">
-    <div class="flex flex-col items-start justify-center">
-      <TitleWithDescription title={title} description={""} />
-    </div>
-    <div class="flex flex-wrap items-center justify-start gap-5 py-8">
-      {
-        sortedCategories.map((category) => {
-          return (
-            <Button
-              size="sm"
-              href={"/blog/" + category.attributes.slug}
-              variant={
-                category.attributes.slug == categoryUrl()
-                  ? "default"
-                  : "secondary"
-              }
-            >
-              {category.attributes.name}
-            </Button>
-          );
-        })
-      }
-    </div>
-    <div
-      id="cardsContainer"
-      class="flex flex-col items-start justify-start gap-4"
-    >
-      {
-        articles.map((article, i) => (
-          <a
-            href={"/blog/" + article.attributes.slug}
-            class="flex gap-4 w-full justify-between group/article"
-          >
-            <div class="flex w-1 bg-primary rounded-xl group-hover/article:w-[6px] transition-all" />
-            <div class="flex flex-col items-stretch justify-center gap-4 py-6 w-full">
-              <div class="flex items-center justify-start gap-2 ">
-                <Calendar />
-                <p class="font-light text-sm">
-                  {new Date(article.attributes.publishedAt).toLocaleDateString(
-                    "pl-PL"
-                  )}
-                </p>
-              </div>
-              <h3 class="text-base md:text-2xl font-semibold w-full break-words line-clamp-3 group-hover/article:text-primary">
-                {article.attributes.title}
-              </h3>
-            </div>
-          </a>
-        ))
-      }
-    </div>
-    <div class="flex w-full items-center justify-center pt-8">
-      {
-        previousUrl && (
-          <Button variant="secondary" size="default" href={previousUrl}>
-            <ChevronLeft />
-          </Button>
-        )
-      }
+	<div class='flex flex-col items-start justify-start w-full py-24'>
+		<div class='flex flex-col items-start justify-center'>
+			<TitleWithDescription title={title} description={""} />
+		</div>
+		<div class='flex flex-wrap items-center justify-start gap-5 py-8'>
+			{
+				sortedCategories.map((category) => {
+					return (
+						<Button
+							size='sm'
+							href={"/blog/" + category.attributes.slug}
+							variant={
+								category.attributes.slug == categoryUrl()
+									? "default"
+									: "secondary"
+							}>
+							{category.attributes.name}
+						</Button>
+					);
+				})
+			}
+		</div>
+		<div
+			id='cardsContainer'
+			class='flex flex-col items-start justify-start gap-4'
+		>
+			{
+				articles.map((article, i) => (
+					<a
+						href={"/blog/" + article.attributes.slug}
+						class='flex gap-4 w-full justify-between group/article'>
+						<div class='flex w-1 bg-primary rounded-xl group-hover/article:w-[6px] transition-all' />
+						<div class='flex flex-col items-stretch justify-center gap-4 py-6 w-full'>
+							<div class='flex items-center justify-start gap-2 '>
+								<Calendar />
+								<p class='font-light text-sm'>
+									{new Date(article.attributes.publishedAt).toLocaleDateString(
+										"pl-PL"
+									)}
+								</p>
+							</div>
+							<h3 class='text-base md:text-2xl font-semibold w-full break-words line-clamp-3 group-hover/article:text-primary'>
+								{article.attributes.title}
+							</h3>
+						</div>
+					</a>
+				))
+			}
+		</div>
+		<div class='flex w-full items-center justify-center pt-8'>
+			{
+				previousUrl && (
+					<Button variant='secondary' size='default' href={previousUrl}>
+						<ChevronLeft />
+					</Button>
+				)
+			}
 
-      <Button variant="secondary" size="default" href={previousUrl}
-        >{Number(currentPage)}</Button
-      >
+			<Button variant='secondary' size='default' href={previousUrl}
+				>{Number(currentPage)}</Button
+			>
 
-      {
-        nextUrl && (
-          <Button variant="secondary" size="default" href={nextUrl}>
-            <ChevronRight />
-          </Button>
-        )
-      }
-    </div>
-  </div>
+			{
+				nextUrl && (
+					<Button variant='secondary' size='default' href={nextUrl}>
+						<ChevronRight />
+					</Button>
+				)
+			}
+		</div>
+	</div>
 </Layout>

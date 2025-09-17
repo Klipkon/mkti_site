@@ -7,8 +7,8 @@ import "@/styles/globals.css";
 import type { ISeo } from "@/types/page";
 
 interface Props {
-  seo: ISeo;
-  slug: string;
+	seo: ISeo;
+	slug: string;
 }
 
 const { seo, slug } = Astro.props;
@@ -16,45 +16,44 @@ const { metaTitle, metaDescription } = seo;
 ---
 
 <!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="description" content="Astro description" />
-    <meta name="viewport" content="width=device-width" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <meta name="generator" content={Astro.generator} />
-    <title>{metaTitle}</title>
-    <meta name="description" content={metaDescription} />
-  </head>
-  <body class="flex items-start justify-center w-full">
-    <div class="container">
-      <Header slug={slug} />
-      <slot />
-      <Footer />
-      <Toaster client:load />
-    </div>
+<html lang='en'>
+	<head>
+		<meta charset='UTF-8' />
+		<meta name='description' content='Astro description' />
+		<meta name='viewport' content='width=device-width' />
+		<link rel='icon' type='image/svg+xml' href='/favicon.svg' />
+		<meta name='generator' content={Astro.generator} />
+		<title>{metaTitle}</title>
+		<meta name='description' content={metaDescription} />
+	</head>
+	<body class='flex items-start justify-center w-full'>
+		<div class='container'>
+			<Header slug={slug} />
+			<slot />
+			<Footer />
+			<Toaster client:load />
+		</div>
 
-    <!-- Google tag (gtag.js) -->
-    <script
-      async
-      type="text/plain"
-      data-category="analytics"
-      data-service="ga4"
-      src="https://www.googletagmanager.com/gtag/js?id=G-F3LLQCC4L6"></script>
-    <script
-      type="text/plain"
-      data-category="analytics"
-      data-service="ga4"
-      is:inline
-    >
-      console.log("aaa");
-      window.dataLayer = window.dataLayer || [];
-      function gtag() {
-        dataLayer.push(arguments);
-      }
-      gtag("js", new Date());
+		<!-- Google tag (gtag.js) -->
+		<script
+			async
+			type='text/plain'
+			data-category='analytics'
+			data-service='ga4'
+			src='https://www.googletagmanager.com/gtag/js?id=G-F3LLQCC4L6'></script>
+		<script
+			type='text/plain'
+			data-category='analytics'
+			data-service='ga4'
+			is:inline
+		>
+			window.dataLayer = window.dataLayer || [];
+			function gtag() {
+				dataLayer.push(arguments);
+			}
+			gtag("js", new Date());
 
-      gtag("config", "G-F3LLQCC4L6");
-    </script>
-  </body>
+			gtag("config", "G-F3LLQCC4L6");
+		</script>
+	</body>
 </html>
