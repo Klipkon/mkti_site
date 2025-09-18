@@ -29,28 +29,36 @@ export default async function fetchApi<T>({
 
   let data = null;
 
-  try {
-    const res = await fetch(url.toString(), {
-      headers: {
-        Authorization: `Bearer ${import.meta.env.STRAPI_API_TOKEN}`,
-        'Strapi-Response-Format': 'v4'
-      },
-    });
 
-  if (!res.ok) throw new Error(`HTTP error ${res.status}`);
+  for (let attempt = 1; attempt <= 3; attempt++) {
+    try {
+      const res = await fetch(url.toString(), {
+        headers: {
+          Authorization: `Bearer ${import.meta.env.STRAPI_API_TOKEN}`,
+          'Strapi-Response-Format': 'v4'
+        },
+      });
 
-    data = await res.json();
-  } catch (error) {
-    console.error("Fetch failed:", error);
+      if (!res.ok) throw new Error(`HTTP error ${res.status}`);
+
+      data = await res.json();
+
+      if (wrappedByKey) {
+        data = data![wrappedByKey];
+      }
+
+      if (wrappedByList) {
+        data = data[0];
+      }
+
+      return data as T;
+    } catch (error) {
+      console.error("Fetch failed:", error);
+
+      if (attempt === 3) throw error; // Give up after 3 attempts
+      await new Promise(res => setTimeout(res, 1000 * attempt));
+    }
   }
 
-  if (wrappedByKey) {
-    data = data![wrappedByKey];
-  }
-
-  if (wrappedByList) {
-    data = data[0];
-  }
-
-  return data as T;
+  return null as unknown as T;
 }
