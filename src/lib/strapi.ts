@@ -27,16 +27,25 @@ export default async function fetchApi<T>({
     `${import.meta.env.STRAPI_URL}/api/${endpoint}?${query ?? ""}`
   );
 
-  const res = await fetch(url.toString(), {
-    headers: {
-      Authorization: `Bearer ${import.meta.env.STRAPI_API_TOKEN}`,
-      'Strapi-Response-Format': 'v4'
-    },
-  });
-  let data = await res.json();
+  let data = null;
+
+  try {
+    const res = await fetch(url.toString(), {
+      headers: {
+        Authorization: `Bearer ${import.meta.env.STRAPI_API_TOKEN}`,
+        'Strapi-Response-Format': 'v4'
+      },
+    });
+
+  if (!res.ok) throw new Error(`HTTP error ${res.status}`);
+
+    data = await res.json();
+  } catch (error) {
+    console.error("Fetch failed:", error);
+  }
 
   if (wrappedByKey) {
-    data = data[wrappedByKey];
+    data = data![wrappedByKey];
   }
 
   if (wrappedByList) {
