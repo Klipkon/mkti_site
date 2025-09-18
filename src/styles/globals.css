@@ -1,37 +1,38 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
+@config "../../tailwind.config.mjs";
 
-@layer base {
-  :root {
-    --background: 0 0% 100%;
-    --foreground: 0 0% 3.9%;
-    --card: 0 0% 100%;
-    --card-foreground: 0 0% 0%;
-    --popover: 0 0% 100%;
-    --popover-foreground: 0 0% 0%;
-    --primary: 217 98% 65%;
-    --primary-foreground: 217 98% 45%;
-    --secondary: 209 100% 72%;
-    --subtle-secondary: 217 98% 65% / 0.15;
-    --subtle-secondary-shadow: 217 98% 65% / 0.05;
-    --secondary-foreground: 209 100% 52%;
-    --muted: 0 0% 96.1%;
-    --muted-foreground: 0 0% 45.1%;
-    --accent: 0 0% 96.1%;
-    --accent-foreground: 0 0% 9%;
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 0 0% 98%;
-    --border: 0 0% 89.8%;
-    --input: 0 0% 89.8%;
-    --ring: 0 0% 3.9%;
-    --radius: 0.625rem;
-    --chart-1: 12 76% 61%;
-    --chart-2: 173 58% 39%;
-    --chart-3: 197 37% 24%;
-    --chart-4: 43 74% 66%;
-    --chart-5: 27 87% 67%;
-  }
+@theme {
+  --shadow-3xl: 0 15px 25px 0 hsl(var(--subtle-secondary));
+}
+
+:root {
+  --background: 0 0% 100%;
+  --foreground: 0 0% 3.9%;
+  --card: 0 0% 100%;
+  --card-foreground: 0 0% 0%;
+  --popover: 0 0% 100%;
+  --popover-foreground: 0 0% 0%;
+  --primary: 217 98% 65%;
+  --primary-foreground: 217 98% 45%;
+  --secondary: 209 100% 72%;
+  --subtle-secondary: 217 98% 65% / 0.15;
+  --subtle-secondary-shadow: 217 98% 65% / 0.05;
+  --secondary-foreground: 209 100% 52%;
+  --muted: 0 0% 96.1%;
+  --muted-foreground: 0 0% 45.1%;
+  --accent: 0 0% 96.1%;
+  --accent-foreground: 0 0% 9%;
+  --destructive: 0 84.2% 60.2%;
+  --destructive-foreground: 0 0% 98%;
+  --border: 0 0% 89.8%;
+  --input: 0 0% 89.8%;
+  --ring: 0 0% 3.9%;
+  --radius: 0.625rem;
+  --chart-1: 12 76% 61%;
+  --chart-2: 173 58% 39%;
+  --chart-3: 197 37% 24%;
+  --chart-4: 43 74% 66%;
+  --chart-5: 27 87% 67%;
 }
 
 @layer base {
@@ -63,6 +64,7 @@
     src: url(/fonts/Inter-Bold.ttf) format("truetype");
   }
 
+
   * {
     @apply border-border;
   }
@@ -76,7 +78,7 @@
   }
 
   #productDesc figure {
-    @apply w-auto h-auto !important;
+    @apply w-auto h-auto;
   }
 
   #productDesc td {
@@ -84,7 +86,7 @@
   }
 
   #productDesc ul {
-    @apply list-disc pl-5 !important;
+    @apply list-disc pl-5;
   }
 
   .card {

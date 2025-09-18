@@ -35,7 +35,7 @@ const content = await marked.parse(article.attributes.content);
 <Layout seo={article.attributes.seo} slug={article.attributes.slug}>
   <div class="flex items-start justify-center w-full">
     <div
-      class="flex flex-col items-start justify-start py-24 gap-6 max-w-screen-md"
+      class="flex flex-col items-start justify-start py-24 gap-6 max-w-(--breakpoint-md)"
     >
       <TitleWithDescription title={article.attributes.title} description="" />
       <div class="flex gap-4">

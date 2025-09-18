@@ -12,9 +12,6 @@ module.exports = {
       },
     },
     extend: {
-      backgroundImage: {
-        "gradient-45": "linear-gradient(to bottom, var(--tw-gradient-stops))",
-      },
       boxShadow: {
         "blue-strong": "0 15px 25px 0 hsl(var(--subtle-secondary))",
         blue: "0 5px 15px 0 hsl(var(--subtle-secondary-shadow))",
