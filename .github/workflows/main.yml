@@ -24,9 +24,9 @@ jobs:
       - uses: actions/checkout@v4
 
       - name: Use Node.js
-        uses: actions/setup-node@v2
+        uses: actions/setup-node@v4
         with:
-          node-version: 20.19.5
+          node-version: 20
 
       - name: Installing dependencies
         run: npm ci
